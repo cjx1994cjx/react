@@ -1,5 +1,5 @@
-import {getSubject} from './action' // 引入action异步
+import {getSubject,getSecSubjectList} from './action' // 引入action异步
 
 import {subjectList} from './reducre' // 引入reducre
 
-export {getSubject,subjectList}
+export {getSubject,subjectList,getSecSubjectList}

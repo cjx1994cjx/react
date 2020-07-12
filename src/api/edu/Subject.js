@@ -7,11 +7,45 @@ const BASE_URL = "/admin/edu/subject";
 // const MOCK_URL = `http://localhost:8888${BASE_URL}`
 
 // 获取一级分类ID
-export function reqGetSubjectList(page,limit) {
+export function reqGetSubjectList(page, limit) {
   return request({
     url: `${BASE_URL}/${page}/${limit}`,
     method: "GET",
   });
+}
+
+// 获取二级分类课程
+export function reqGetSecSubjectList(parenId) {
+  return request({
+    url: `${BASE_URL}/get/${parenId}`,
+    method: "GET",
+  });
+}
+
+// 添加课程分类
+// export function reqAddSubjectList(title, parenId) {
+//   console.log(title,parenId)
+//   return request({
+//     url: `${BASE_URL}/save`,
+//     method: "POST",
+//     data: {
+//       title,
+//       parenId
+//     }
+//   });
+// }
+export function reqAddSubjectList(title, parentId) {
+  console.log(title, parentId)
+  // request返回一个promise
+  return request({
+    url: `${BASE_URL}/save`,
+    // http://localhost:8888/admin/edu/subject/1/10
+    method: 'POST',
+    data: {
+      title,
+      parentId
+    }
+  })
 }
 
 
