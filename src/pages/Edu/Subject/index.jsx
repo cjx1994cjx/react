@@ -40,6 +40,7 @@ class Subject extends Component {
       handlePageChange = (page, size) => {
         this.props.getSubject(page, size)
         this.curentPage = page
+        this.sizePage = size
       }
       
       handleSizeChange = (cuccess, pageSize) => {
@@ -127,13 +128,18 @@ class Subject extends Component {
     confirm({
       title: `你确定删除${value.title}吗?`,
       icon: <ExclamationCircleOutlined />,
-      onOk:()=> {
-        // let totalPage =Math.ceil()
-        // if(this.curentPage !== 1 && this.props.subjectList.items.length === 1 &&  ){
+      onOk:async()=> {
 
-        // }
+        await reqSubjectDelete(value._id)
+        message.success('删除成功了')
 
-        reqSubjectDelete(value._id)
+        let totalPage =Math.ceil(this.props.subjectList.total/this.sizePage)
+        if(this.curentPage !== 1 && this.props.subjectList.items.length === 1 && totalPage === this.currentPage ){
+          this.props.getSubjectList(--this.currentPage, this.pageSize)
+          return
+        }
+
+        
         this.props.getSubject(this.curentPage,this.sizePage)
       }
     });
