@@ -1,5 +1,5 @@
 // 引入常量
-import { GET_SUBJECT_LIST,GET_SECSUBJECT_LIST } from './constant'
+import { GET_SUBJECT_LIST,GET_SECSUBJECT_LIST,GET_UPDATASUBJECT_LIST } from './constant'
 
 const initSubJect = {
     total: 0, // 总数
@@ -32,6 +32,21 @@ export function subjectList(prevState =initSubJect, action) {
               return {
                 ...prevState
               }
+            case GET_UPDATASUBJECT_LIST:
+              // 遍历一级课程分类
+              prevState.items.forEach(subject => {
+                if(subject._id === action.data.parentId){
+                  subject.title = action.data.title
+                  return
+                }
+                // 遍历二级课程分类
+                subject.children.forEach(child => {
+                  if(child._id === action.data.parentId){
+                    child.title = action.data.title
+                  }
+                })
+              })
+                return {...prevState}
         default:
             return prevState
     }

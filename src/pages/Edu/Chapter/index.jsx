@@ -15,6 +15,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 import { connect } from "react-redux";
 import SearchForm from "./SearchForm";
+import {getLessonList} from './redux'
 
 import "./index.less";
 
@@ -27,7 +28,8 @@ dayjs.extend(relativeTime);
     //   state.course.permissionValueList,
     //   "Course"
     // )
-  })
+    chapterList:state.chapterList
+  }),{getLessonList}
   // { getcourseList }
 )
 class Chapter extends Component {
@@ -90,7 +92,16 @@ class Chapter extends Component {
     });
   };
 
+  handleClickExpand = (expand, record) => {
+    console.log(expand, record);
+    if(expand){
+      this.props.getLessonList(record._id)
+    }
+    
+  }
+
   render() {
+    // console.log(this.props);
     const { previewVisible, previewImage, selectedRowKeys } = this.state;
 
     const columns = [
@@ -135,80 +146,7 @@ class Chapter extends Component {
       },
     ];
 
-    const data = [
-      {
-        id: "111",
-        title: "第一章节",
-        children: [
-          {
-            id: "1",
-            title: "第一课时",
-            free: false,
-            videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
-          },
-          {
-            id: "2",
-            title: "第二课时",
-            free: true,
-            videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
-          },
-          {
-            id: "3",
-            title: "第三课时",
-            free: true,
-            videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
-          },
-        ],
-      },
-      {
-        id: "222",
-        title: "第二章节",
-        children: [
-          {
-            id: "4",
-            title: "第一课时",
-            free: false,
-            videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
-          },
-          {
-            id: "5",
-            title: "第二课时",
-            free: true,
-            videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
-          },
-          {
-            id: "6",
-            title: "第三课时",
-            free: true,
-            videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
-          },
-        ],
-      },
-      {
-        id: "333",
-        title: "第三章节",
-        children: [
-          {
-            id: "1192252824606289921",
-            title: "第一课时",
-            free: false,
-            videoSourceId: "756cf06db9cb4f30be85a9758b19c645",
-          },
-          {
-            id: "1192628092797730818",
-            title: "第二课时",
-            free: true,
-            videoSourceId: "2a02d726622f4c7089d44cb993c531e1",
-          },
-          {
-            id: "1192632495013380097",
-            title: "第三课时",
-            free: true,
-            videoSourceId: "4e560c892fdf4fa2b42e0671aa42fa9d",
-          },
-        ],
-      },
-    ];
+ 
 
     const rowSelection = {
       selectedRowKeys,
@@ -287,11 +225,15 @@ class Chapter extends Component {
             type="info"
             style={{ marginBottom: 20 }}
           />
-          <Table
+          <Table 
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data}
-            rowKey="id"
+            dataSource={this.props.chapterList.items}
+            rowKey="_id"
+            // expandable={{onExpand:this.handleClickExpand}}
+            expandable={{
+              onExpand: this.handleClickExpand
+            }}
           />
         </div>
 

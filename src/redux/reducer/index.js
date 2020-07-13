@@ -10,6 +10,7 @@ import { menuList } from "@pages/Acl/Permission/redux";
 // 引入subject数据
 // import {subjectList} from '@pages/Edu/Subject/redux'
 import { subjectList } from "@pages/Edu/Subject/redux";
+import {chapterList} from '@pages/Edu/Chapter/redux'
 
 export default combineReducers({
   loading,
@@ -18,5 +19,6 @@ export default combineReducers({
   userList,
   roleList,
   menuList,
-  subjectList
+  subjectList,
+  chapterList
 });

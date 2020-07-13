@@ -35,7 +35,7 @@ export function reqGetSecSubjectList(parenId) {
 //   });
 // }
 export function reqAddSubjectList(title, parentId) {
-  console.log(title, parentId)
+  // console.log(title, parentId)
   // request返回一个promise
   return request({
     url: `${BASE_URL}/save`,
@@ -46,6 +46,28 @@ export function reqAddSubjectList(title, parentId) {
       parentId
     }
   })
+}
+// 更新课程分类数据
+export function reqGetupdateSubjectList(id,title) {
+  // console.log(id,title)
+  return request({
+    url: `${BASE_URL}/update`,
+    method: "PUT",
+    data:{
+      id,title
+    }
+  });
+}
+
+// 删除数据
+export function reqSubjectDelete(id){
+  return request({
+    url: `${BASE_URL}/remove/${id}`,
+    method: "DELETE",
+    data:{
+      id
+    }
+  });
 }
 
 
