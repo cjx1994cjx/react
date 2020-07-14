@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, message, Tooltip, Modal, Alert, Table } from "antd";
+import { Button, message, Tooltip, Modal, Alert, Table,Input } from "antd";
 import {
   FullscreenOutlined,
   RedoOutlined,
@@ -93,13 +93,18 @@ class Chapter extends Component {
   };
 
   handleClickExpand = (expand, record) => {
-    console.log(expand, record);
+    // console.log(expand, record);
     if(expand){
       this.props.getLessonList(record._id)
     }
     
   }
-
+  //新增课时
+  addUpLesson=data=>()=>{
+    // console.log(this.props);
+    console.log(data);
+    this.props.history.push('/edu/chapter/addlesson',data)
+  }
   render() {
     // console.log(this.props);
     const { previewVisible, previewImage, selectedRowKeys } = this.state;
@@ -121,16 +126,28 @@ class Chapter extends Component {
         width: 300,
         fixed: "right",
         render: (data) => {
-          if ("free" in data) {
+          
+          // {this.props.chapterList.items.forEach(item => {
+          //   if(item.children.leng > 0){
+          //     item.children.forEach(child => {
+          //       if(child._id === data._id){
+          //         return <Input></Input>
+          //       }
+          //     })
+          //   }
+          // })}
+          
+          // console.log(data);
+          // if ("free" in data) {
             return (
               <div>
-                <Tooltip title="查看详情">
-                  <Button>
-                    <SettingOutlined />
+                <Tooltip title="新增课时">
+                  <Button type='primary' onClick={this.addUpLesson(data)}>
+                    <PlusOutlined />
                   </Button>
                 </Tooltip>
                 <Tooltip title="更新章节">
-                  <Button type="primary" style={{ margin: "0 10px" }}>
+                  <Button type="primary"style={{ margin: "0 10px" }}>
                     <FormOutlined />
                   </Button>
                 </Tooltip>
@@ -143,7 +160,7 @@ class Chapter extends Component {
             );
           }
         },
-      },
+      // },
     ];
 
  
