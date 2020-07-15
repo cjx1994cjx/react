@@ -33,5 +33,19 @@ export function reqAddLesson({chapterId,title,file,video}){
     })
   }
 
+  // 批量删除课时
+export function reqAllDelLesson(idList) {
+  console.log(idList)
+  return request({
+    url: `${BASE_URL}/batchRemove`,
+    method: "DELETE",
+    data:{
+      idList
+    }
+  });
+}
+
+ 
+
 
 

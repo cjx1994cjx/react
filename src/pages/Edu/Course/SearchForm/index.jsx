@@ -1,5 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Form, Input, Select, Cascader, Button } from "antd";
+
+// 导入所有讲师请求
+import {reqGetAllTeacherList} from '@api/edu/teacher'
+// 导入所有课程一级分类
+import {reqAllSubjectList} from '@api/edu/Subject'
 
 import "./index.less";
 
@@ -7,19 +12,55 @@ const { Option } = Select;
 
 function SearchForm() {
   const [form] = Form.useForm();
+  // 接受所有讲师数据
+  const [teachers,setTeachers] = useState([])
+  // 接收所有一级课程分类
+  const [subJectList,setsubJectList] = useState([])
 
-  const [options, setOptions] = useState([
-    {
-      value: "zhejiang",
-      label: "Zhejiang",
-      isLeaf: false
-    },
-    {
-      value: "jiangsu",
-      label: "Jiangsu",
+  useEffect(()=>{
+    // 定义函数使用async方法
+    async function fetchData(){
+
+      const [teachers,subJectList] = await Promise.all([
+         // 获取讲师数据
+      reqGetAllTeacherList(),
+      // 获取全部课程分类
+      reqAllSubjectList()
+      ])
+     
+      // console.log(subJectList);
+      // 讲师数据赋值给组件使用
+      setTeachers(teachers)
+      // 将一级所有课程分类赋值给组件
+      setsubJectList(subJectList)
+    }
+    fetchData()
+    
+  },[])
+
+
+  // 遍历一级课程数据赋值给OPTIONS
+  const options = subJectList.map(sub => {
+    return {
+      value:sub._id,
+      label:sub.title,
       isLeaf: false
     }
-  ]);
+  })
+
+
+  // const [options, setOptions] = useState([
+  //   {
+  //     value: "zhejiang",
+  //     label: "Zhejiang",
+  //     isLeaf: false
+  //   },
+  //   {
+  //     value: "jiangsu",
+  //     label: "Jiangsu",
+  //     isLeaf: false
+  //   }
+  // ]);
 
   const onChange = (value, selectedOptions) => {
     console.log(value, selectedOptions);
@@ -31,18 +72,18 @@ function SearchForm() {
 
     // load options lazily
     setTimeout(() => {
-      targetOption.loading = false;
-      targetOption.children = [
-        {
-          label: `${targetOption.label} Dynamic 1`,
-          value: "dynamic1"
-        },
-        {
-          label: `${targetOption.label} Dynamic 2`,
-          value: "dynamic2"
-        }
-      ];
-      setOptions([...options]);
+      // targetOption.loading = false;
+      // targetOption.children = [
+      //   {
+      //     label: `${targetOption.label} Dynamic 1`,
+      //     value: "dynamic1"
+      //   },
+      //   {
+      //     label: `${targetOption.label} Dynamic 2`,
+      //     value: "dynamic2"
+      //   }
+      // ];
+      // setOptions([...options]);
     }, 1000);
   };
 
@@ -61,9 +102,10 @@ function SearchForm() {
           placeholder="课程讲师"
           style={{ width: 250, marginRight: 20 }}
         >
-          <Option value="lucy1">Lucy1</Option>
-          <Option value="lucy2">Lucy2</Option>
-          <Option value="lucy3">Lucy3</Option>
+          {/* 动态渲染讲师数据 */}
+          {teachers.map(item => {
+            return <Option key={item._id} value={item._id}>{item.name}</Option>
+          })}
         </Select>
       </Form.Item>
       <Form.Item name="subject" label="分类">
@@ -72,7 +114,7 @@ function SearchForm() {
           options={options}
           loadData={loadData}
           onChange={onChange}
-          changeOnSelect
+          // changeOnSelect
           placeholder="课程分类"
         />
       </Form.Item>

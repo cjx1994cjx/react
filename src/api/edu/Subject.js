@@ -70,4 +70,12 @@ export function reqSubjectDelete(id){
   });
 }
 
+ // 获取所有一级课程分类
+ export function reqAllSubjectList(){
+  return request({
+    url: `${BASE_URL}`,
+    method: "GET"
+  });
+}
+
 

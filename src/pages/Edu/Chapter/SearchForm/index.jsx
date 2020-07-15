@@ -39,6 +39,7 @@ useEffect(() => {
 //根据课程获取章节列表数据
 const handlegetChapterList = async (value) => {
   // console.log(value);
+  // console.log(value);
   const data ={
     page:1,
     limit:10,

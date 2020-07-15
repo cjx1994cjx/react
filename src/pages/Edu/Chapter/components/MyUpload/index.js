@@ -91,28 +91,30 @@ export default class MyUpload extends Component {
       const key = nanoid(10)
       const token = this.state.uploadToken
       const putExtra={
-        mimeType: ['video/*']
+        mimeType: 'video/*'
       }
       const config ={region: qiniu.region.z2}
+      console.log(file,key,token, putExtra,config)
     const observable = qiniu.upload(file, key, token, putExtra,config)
 
 
     const observer = {
         //上传过程中触发的回调函数
         next(res) {
-            console.log(res)
+            console.log('成功了',res)
             value.onProgress(res.total)
         },
         //上传失败触发的回调函数
         error(err) {
-            console.log(err)
+            console.log('失败', err)
             value.onError(err)
         },
         // 上传成功触发的回调函数
         complete:res=> {
-            console.log(res)
+            console.log('上传',res)
             value.onSuccess(res)
-            this.props.onChange('http://qdgj1eyp3.bkt.clouddn.com'+res.key)
+            // this.props.onChange('http://qdgftt8wp.bkt.clouddn.com//'+res.key)
+            this.props.onChange('http://qdcdb1qpp.bkt.clouddn.com/'+res.key)
         }
     }
 
