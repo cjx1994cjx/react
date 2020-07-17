@@ -10,6 +10,17 @@ export function reqGetCourseList() {
   });
 }
 
+//获取课程分页列表
+export function reqGetSecList({page,limit,teacherId,subjectId,subjectParentId,title}) {
+  return request({
+    url: `${BASE_URL}/${page}/${limit}`,
+    method: "GET",
+    parmas:{
+      teacherId,subjectId,subjectParentId,title
+    }
+  });
+}
+
 
 
 

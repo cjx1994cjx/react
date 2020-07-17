@@ -78,4 +78,16 @@ export function reqSubjectDelete(id){
   });
 }
 
+// 获取所有二级课程分类
+export function reqAllSecjectList(parentId){
+  return request({
+    url: `${BASE_URL}/get/${parentId}`,
+    method: "GET",
+    // data:{
+    //   totao,
+    //   items
+    // }
+  });
+}
+
 
