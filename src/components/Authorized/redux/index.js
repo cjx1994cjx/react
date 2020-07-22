@@ -1,4 +1,5 @@
-import user from "./reducers";
-import { getAccessRoutes, getUserInfo, resetUser } from "./actions";
+import user from './reducers'
 
-export { getAccessRoutes, user, getUserInfo, resetUser };
+import {getUserInfo,getUserMenu} from './actions'
+
+export {getUserInfo,getUserMenu,user}

@@ -1,6 +1,11 @@
-import Login from "@pages/Login";
-import NotFound from "@pages/404";
+// import Login from "@pages/Login";
+// import NotFound from "@pages/404";
 
+import {lazy} from 'react'
+
+const Login =  lazy(()=>import('@pages/Login'))
+const NotFound = lazy(()=>import('@pages/404'))
+const Oauth =  lazy(() => import("@pages/Login/components/Oauth"));
 //#region 
 /* export const asyncRoutes = [
 	{
@@ -210,6 +215,7 @@ export const defaultRoutes = [
 		component: "Admin",
 		icon: "home",
 		name: "后台管理系统",
+		hidden:false
 	},
 	// { path: "*", redirect: "/404", component: NotFound, hidden: true }
 ];
